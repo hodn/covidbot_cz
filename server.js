@@ -6,6 +6,8 @@ const key = process.env.CONSUMER_KEY;
 const secret = process.env.CONSUMER_SECRET;
 const token = process.env.ACCESS_TOKEN;
 const tokenSecret = process.env.TOKEN_SECRET;
+const apiToken = process.env.API_TOKEN;
+
 
 exports.handler = function (event, context) {
 
@@ -41,7 +43,7 @@ exports.handler = function (event, context) {
 
   }
 
-  https.get('https://onemocneni-aktualne.mzcr.cz/api/v2/covid-19/zakladni-prehled.json', (res) => {
+  https.get('https://onemocneni-aktualne.mzcr.cz/api/v3/zakladni-prehled?page=1&itemsPerPage=100&apiToken=' + apiToken, (res) => {
     console.log('statusCode: ', res.statusCode);
     console.log('headers: ', res.headers);
 
@@ -53,9 +55,9 @@ exports.handler = function (event, context) {
 
     res.on('end', (d) => {
 
-      const confirmedCases = JSON.parse(response)['data'][0]['potvrzene_pripady_vcerejsi_den'];
-      const hospitalized = JSON.parse(response)['data'][0]['aktualne_hospitalizovani'];
-      const date = new Date(JSON.parse(response)['data'][0]['datum']);
+      const confirmedCases = JSON.parse(response)['hydra:member'][0]['potvrzene_pripady_vcerejsi_den'];
+      const hospitalized = JSON.parse(response)['hydra:member'][0]['aktualne_hospitalizovani'];
+      const date = new Date(JSON.parse(response)['hydra:member'][0]['datum']);
       const updateDay = date.getDay();
       const today = new Date().getDay();
 
