@@ -5,23 +5,41 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/commenter.js",
-            "request": "launch",
+            "name": "Attach by Process ID",
+            "processId": "${command:PickProcess}",
+            "request": "attach",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
         },
+        
+        {
+            "name": "Launch Program Comm",
+            "program": "${workspaceFolder}/commenter.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
+            ]
+        },
 
         {
-            "name": "Launch Program",
+            "name": "Launch Program Main",
             "program": "${workspaceFolder}/server.js",
             "request": "launch",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "type": "pwa-node"
+            "type": "pwa-node",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js",
+                "!**/node_modules/**"
+            ]
         },
         {
             "type": "pwa-node",
