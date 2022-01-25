@@ -1,5 +1,5 @@
-const https = require('https');
 const axios = require('axios');
+const qs = require('qs');
 const addOAuthInterceptor = require('axios-oauth-1.0a').default;
 
 const key = process.env.CONSUMER_KEY;
@@ -53,7 +53,10 @@ exports.handler = function (event, context) {
                         status: info.text,
                         in_reply_to_status_id: info.tweet.id_str,
                         auto_populate_reply_metadata: true
-                    }
+                    },
+                    paramsSerializer: params => {
+                        return qs.stringify(params)
+                      }
                 })
                     .then(function (response) {
                         console.log(response);
