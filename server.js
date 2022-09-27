@@ -60,7 +60,12 @@ exports.handler = function (event, context) {
         const updateDay = date.getDay();
         const today = new Date().getDay();
 
-        if (updateDay === today) updateTwitter(confirmedCases, hospitalized, reinfections);
+        if (updateDay === today) {
+          updateTwitter(confirmedCases, hospitalized, reinfections);
+        } else {
+          updateTwitter('NO_MZCR_DATA', 'NO_MZCR_DATA', 'NO_MZCR_DATA');
+        }
+        
       })
   }).catch(function (error) {
     console.log(error);
